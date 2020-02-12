@@ -86,3 +86,16 @@ const pluralize = function (noun, number) {
 console.log( pluralize('cat', 5) );
 console.log( pluralize('dog', 0) );
 console.log( pluralize('turtle', 1) );
+
+////////////////////////////////////////////////////////////////////////////////
+// How to do loops with just if statements and functions?
+// Recursion
+
+const countdown = function (number) {
+  if (number < 0) {
+    return; // exit
+  } else {
+    console.log( number );
+    countdown( number-1 );
+  }
+};
