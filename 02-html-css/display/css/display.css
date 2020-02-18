@@ -22,3 +22,26 @@ body {
 .inline-block {
   display: inline-block;
 }
+
+.none {
+  display: none;
+}
+
+.visibility-hidden {
+  visibility: hidden;
+}
+
+.spooky span {
+  visibility: hidden;
+}
+
+/* Pseudoselector */
+.spooky:hover {
+  background-color: black;
+}
+
+.spooky:hover span {
+  color: yellow;
+  visibility: visible;
+  transition: 2s all;
+}
