@@ -1,7 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto|Open+Sans:400,700&display=swap');
+
 body {
   background-color: #222; /* equivalent to #222222 .Range: #000000 - #ffffff */
   margin: 0;
   padding: 0;
+  font-family: 'Open Sans', sans-serif;
+}
+
+h1, h2, h3 {
+  font-family: 'Roboto', fantasy;
 }
 
 .container {
@@ -34,9 +41,15 @@ main {
   width: 75%;
 }
 
+main img {
+  display: block;
+  margin: auto; /* Center */
+}
+
 aside {
   display: inline-block;
-  width: 21%; /* In CSS: 75% + 21% === 100% */
+  margin-top: 14px;
+  width: 20%; /* In CSS: 75% + 21% === 100% */
   vertical-align: top;
   background-color: #cfc;
   padding: 1em;
