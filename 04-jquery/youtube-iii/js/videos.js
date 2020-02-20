@@ -22,3 +22,6 @@ for (let i = 0; i < $links.length; i++) {
   const $link = $links.eq( i );
   thumbnailify( $link );
 }
+
+$('h2').funText(100, 'candy');
+$('a').funText(50, 'candy');
