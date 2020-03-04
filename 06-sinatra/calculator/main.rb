@@ -1,8 +1,6 @@
 require 'sinatra'
 require 'sinatra/reloader'
 
-# Convention over configuration
-
 get '/' do
   erb :home # Embedded Ruby
 end
