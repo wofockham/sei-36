@@ -41,7 +41,7 @@ post '/butterflies' do
   butterfly.family = params[:family]
   butterfly.image = params[:image]
   butterfly.save
-  redirect to('/butterflies')
+  redirect to("/butterflies/#{ butterfly.id }") # SHOW
 end
 
 # SHOW
@@ -74,7 +74,54 @@ get '/butterflies/:id/delete' do
 end
 
 # Plants #######################################################################
+# INDEX
 get '/plants' do
   @plants = Plant.all
   erb :plants_index
+end
+
+# NEW
+get '/plants/new' do
+  erb :plants_new
+end
+
+# CREATE
+post '/plants' do
+  plant = Plant.new
+  plant.name = params[:name]
+  plant.image = params[:image]
+  plant.save
+  redirect to("/plants/#{ plant.id }")
+end
+
+# SHOW
+get '/plants/:id' do
+  @plant = Plant.find params[:id]
+  erb :plants_show
+end
+
+# EDIT
+get '/plants/:id/edit' do
+  @plant = Plant.find params[:id]
+  erb :plants_edit
+end
+
+# UPDATE
+post '/plants/:id' do
+  plant = Plant.find params[:id]
+  plant.name = params[:name]
+  plant.image = params[:image]
+  plant.save
+  redirect to("/plants/#{ plant.id }") # SHOW
+end
+
+# DELETE
+get '/plants/:id/delete' do
+  plant = Plant.find params[:id]
+  plant.destroy
+  redirect to("/plants") # INDEX
+end
+
+after do
+  ActiveRecord::Base.connection.close
 end
