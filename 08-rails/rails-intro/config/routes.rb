@@ -7,4 +7,7 @@ Rails.application.routes.draw do
 
   get '/auto/:color' => 'auto#color'
   get '/auto/:hp/:torque' => 'auto#engine'
+
+  get '/calc/:x/:y/:operator' => 'calc#calculate'
+  get '/funny' => 'pages#lol'
 end
