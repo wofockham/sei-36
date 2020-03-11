@@ -10,6 +10,15 @@
   </head>
 
   <body>
+    <nav>
+      <%= link_to "Home", root_path %>
+      |
+      <%= link_to "Works", works_path %>
+      <%= link_to "New work", new_work_path %>
+      |
+      <%= link_to "Artists", artists_path %>
+      <%= link_to "New artist", new_artist_path %>
+    </nav>
     <%= yield %>
   </body>
 </html>
