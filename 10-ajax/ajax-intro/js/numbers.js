@@ -7,10 +7,16 @@ const fetchFact = function () {
     }
 
     console.log(xhr.responseText);
-    document.body.innerHTML += xhr.responseText;
+
+    const data = JSON.parse( xhr.responseText );
+
+    const p = document.createElement('p');
+    p.innerHTML = data.text;
+
+    document.body.appendChild(p);
   };
 
-  xhr.open('GET', 'http://numbersapi.com/random/trivia'); // ready state 1
+  xhr.open('GET', 'http://numbersapi.com/random/trivia?json'); // ready state 1
   xhr.send(); // Asynchronous // ready state 2 and 3 and 4
 };
 
