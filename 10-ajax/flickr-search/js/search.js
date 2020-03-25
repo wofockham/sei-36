@@ -1,4 +1,7 @@
-let currentPage = 1;
+const state = {
+  currentPage: 1,
+  requestInProgress: false
+};
 
 const generateURL = function (p) {
   return [
@@ -24,7 +27,13 @@ const showImages = function (results) {
 };
 
 const searchFlickr = function (words) {
+  if (state.requestInProgress === true) {
+    return;
+  }
+
   console.log('Searching Flickr for', words);
+
+  state.requestInProgress = true;
 
   const flickrURL = 'https://api.flickr.com/services/rest?jsoncallback=?';
   $.getJSON(flickrURL, {
@@ -32,13 +41,18 @@ const searchFlickr = function (words) {
     api_key: '2f5ac274ecfac5a455f38745704ad084', // This is not a secret key
     text: words,
     format: 'json',
-    page: currentPage++ // increment currentPage for the next iteration
-  }).done(showImages);
+    page: state.currentPage++ // increment currentPage for the next iteration
+  }).done(showImages).done(function () {
+    state.requestInProgress = false;
+  });
+
 };
 
 $(document).ready(function () {
   $('form#search').on('submit', function (event) {
     event.preventDefault(); // Don't go anywhere.
+
+    state.currentPage = 1;
 
     const term = $('#query').val();
     searchFlickr( term );
