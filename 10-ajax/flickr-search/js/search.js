@@ -1,3 +1,5 @@
+let currentPage = 1;
+
 const generateURL = function (p) {
   return [
     'http://farm',
@@ -29,7 +31,8 @@ const searchFlickr = function (words) {
     method: 'flickr.photos.search',
     api_key: '2f5ac274ecfac5a455f38745704ad084', // This is not a secret key
     text: words,
-    format: 'json'
+    format: 'json',
+    page: currentPage++ // increment currentPage for the next iteration
   }).done(showImages);
 };
 
