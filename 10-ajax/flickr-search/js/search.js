@@ -13,8 +13,12 @@ const generateURL = function (p) {
 }
 
 const showImages = function (results) {
-  console.log( results.photos.photo );
-  console.log( generateURL( results.photos.photo[0] )  );
+  console.log( results ); // For debugging.
+  _( results.photos.photo ).each(function (photo) {
+    const thumbnailURL = generateURL(photo);
+    const $img = $('<img>', {src: thumbnailURL});
+    $img.appendTo('#images');
+  });
 };
 
 const searchFlickr = function (words) {
@@ -35,5 +39,14 @@ $(document).ready(function () {
 
     const term = $('#query').val();
     searchFlickr( term );
+  });
+
+  // Extremely twitchy: TODO: chill out
+  $(window).on('scroll', function () {
+    const scrollBottom = $(document).height() - $(window).height() - $(window).scrollTop();
+    if (scrollBottom < 700) {
+      const term = $('#query').val();
+      searchFlickr( term );
+    }
   });
 });
