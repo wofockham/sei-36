@@ -61,3 +61,35 @@ const sum = function (runningTotal, n) {
 
 const total = _( nums ).reduce( sum );
 console.log('The total is', total);
+
+// .find() /////////////////////////////////////////////////////////////////////
+const multipleOfFive = function (n) {
+  console.log('considering', n, n % 5 === 0);
+  return n % 5 === 0;
+};
+
+const firstMultipleOfFive = _( nums ).find( multipleOfFive );
+// .find() also works for objects and if you .find() a use for that, I will buy you a beer.
+
+// .select() ///////////////////////////////////////////////////////////////////
+const allFives = _( nums ).select( multipleOfFive );
+console.log( allFives );
+
+// .reject() ///////////////////////////////////////////////////////////////////
+const notFives = _( nums ).reject( multipleOfFive );
+console.log( notFives );
+
+// .pluck() ////////////////////////////////////////////////////////////////////
+const bros = [
+  {name: 'Groucho', instrument: 'guitar', vice: 'cigars', age: 45},
+  {name: 'Harpo', instrument: 'harp', vice: 'mutism', age: 45},
+  {name: 'Chico', instrument: 'piano', vice: 'infidelity', age: 45},
+];
+
+console.log( _( bros ).pluck( 'name' ) );
+
+// .max() / .min() /////////////////////////////////////////////////////////////
+console.log( _(nums).max() );
+
+// .sortBy()
+_(bros).sortBy('name'); // non-destructive.
