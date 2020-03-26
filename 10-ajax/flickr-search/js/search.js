@@ -1,6 +1,6 @@
 const state = {
   currentPage: 1,
-  requestInProgress: false
+  lastPageReached: false
 };
 
 const generateURL = function (p) {
@@ -27,13 +27,11 @@ const showImages = function (results) {
 };
 
 const searchFlickr = function (words) {
-  if (state.requestInProgress === true) {
+  if (state.lastPageReached === true) {
     return;
   }
 
   console.log('Searching Flickr for', words);
-
-  state.requestInProgress = true;
 
   const flickrURL = 'https://api.flickr.com/services/rest?jsoncallback=?';
   $.getJSON(flickrURL, {
@@ -42,10 +40,11 @@ const searchFlickr = function (words) {
     text: words,
     format: 'json',
     page: state.currentPage++ // increment currentPage for the next iteration
-  }).done(showImages).done(function () {
-    state.requestInProgress = false;
+  }).done(showImages).done(function (data) {
+    if (data.photos.page >= data.photos.pages) {
+      state.lastPageReached = true;
+    }
   });
-
 };
 
 $(document).ready(function () {
@@ -53,17 +52,22 @@ $(document).ready(function () {
     event.preventDefault(); // Don't go anywhere.
 
     state.currentPage = 1;
+    state.lastPageReached = false;
+
+    $('#images').empty();
 
     const term = $('#query').val();
     searchFlickr( term );
   });
 
-  // Extremely twitchy: TODO: chill out
+  const debouncedSearchFlickr = _.debounce(searchFlickr, 4000, {trailing: false});
+
+  // Extremely twitchy
   $(window).on('scroll', function () {
     const scrollBottom = $(document).height() - $(window).height() - $(window).scrollTop();
     if (scrollBottom < 700) {
       const term = $('#query').val();
-      searchFlickr( term );
+      debouncedSearchFlickr( term );
     }
   });
 });
