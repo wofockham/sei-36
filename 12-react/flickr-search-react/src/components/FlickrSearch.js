@@ -3,14 +3,30 @@ import SearchForm from './SearchForm';
 import Gallery from './Gallery';
 
 import jsonp from 'jsonp-es6'; // for homework: use axios
+import _ from 'underscore';
 
 class FlickrSearch extends Component {
   constructor() {
     super();
+    this.state = { images: [] };
     this.fetchImages = this.fetchImages.bind(this);
   }
 
   fetchImages(q) {
+    const generateURL = function (p) {
+      return [
+        'http://farm',
+        p.farm,
+        '.static.flickr.com/',
+        p.server,
+        '/',
+        p.id,
+        '_',
+        p.secret,
+        '_q.jpg' // Change this to something else for different sizes (see docs)
+      ].join('');
+    }
+
     console.log('Searching Flickr for', q);
     const flickrURL = 'https://api.flickr.com/services/rest?jsoncallback=?';
     const flickrParams = {
@@ -22,7 +38,8 @@ class FlickrSearch extends Component {
 
     // For homework: use axios.
     jsonp(flickrURL, flickrParams, {callback: 'jsoncallback'}).then((results) => {
-      console.log( results );
+      const images = _(results.photos.photo).map( generateURL );
+      this.setState({images: images});
     });
   }
 
@@ -31,7 +48,7 @@ class FlickrSearch extends Component {
       <div>
         <h1>Image Search</h1>
         <SearchForm onSubmit={ this.fetchImages } />
-        <Gallery />
+        <Gallery images={ this.state.images } />
       </div>
     );
   }
