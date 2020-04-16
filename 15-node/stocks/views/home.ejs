@@ -1,12 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Stock Price Lookup</title>
-    <link rel="stylesheet" href="/css/stocks.css">
-  </head>
+  <%- include('partials/head.ejs') %>
   <body>
-    <h1>Look Up A Stock Price</h1>
+    <%- include('partials/nav.ejs') %>
     <form action="/info">
       <label>
         Stock Symbol:

@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Stock Look Up</title>
-    <link rel="stylesheet" href="/css/stocks.css">
-  </head>
+  <%- include('partials/head.ejs') %>
   <body>
+    <%- include('partials/nav.ejs') %>
     <p>
       <%= symbol %> last traded at $<%= quotes[0].lastSalePrice %>
     </p>
