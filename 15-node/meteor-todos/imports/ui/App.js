@@ -7,6 +7,19 @@ import { Tasks } from '../api/tasks.js'; // Our collection or "model"
 import Task from './Task'; // Component
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      hideCompleted: false
+    };
+  }
+
+  toggleHideCompleted() {
+    this.setState({
+      hideCompleted: ! this.state.hideCompleted
+    });
+  }
+
   handleSubmit(event) {
     event.preventDefault();
 
@@ -21,7 +34,11 @@ class App extends Component {
   }
 
   renderTasks() {
-    return this.props.tasks.map((task) => (
+    let filteredTasks = this.props.tasks;
+    if (this.state.hideCompleted) {
+      filteredTasks = filteredTasks.filter(task => !task.completed); // Study this.
+    }
+    return filteredTasks.map((task) => (
       <Task key={task._id} task={task} />
     ));
   }
@@ -30,7 +47,17 @@ class App extends Component {
     return (
       <div className="container">
         <header>
-          <h1>Todo List</h1>
+          <h1>Todo List ({this.props.incompleteCount})</h1>
+
+          <label className="hide-completed">
+            <input
+              type="checkbox"
+              readOnly
+              checked={this.state.hideCompleted}
+              onClick={this.toggleHideCompleted.bind(this)}
+            />
+            Hide completed tasks
+          </label>
 
           <form className="new-task" onSubmit={this.handleSubmit.bind(this)}>
             <input
@@ -53,6 +80,7 @@ class App extends Component {
 // You are not expected to understand this
 export default withTracker(() => {
   return {
-    tasks: Tasks.find({}, { sort: { createdAt: -1 } }).fetch()
+    tasks: Tasks.find({}, { sort: { createdAt: -1 } }).fetch(),
+    incompleteCount: Tasks.find({ completed: { $ne: true } }).count()
   }
 })(App);
