@@ -18,8 +18,8 @@ const port = process.env.PORT || 3000;
 const app = express();
 
 app.use(cors());
-// app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 routes(app);
 app.listen(port);
