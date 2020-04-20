@@ -39,7 +39,7 @@ exports.deleteWord = (req, res) => {
   Vocab.deleteOne({ _id: req.params.wordId }, (err) => {
     if (err) res.send(err);
     res.json({
-      message: 'Word successfully deleted'.
+      message: 'Word successfully deleted',
       _id: req.params.wordId
     });
   });

@@ -10,14 +10,15 @@ const routes = require('./api/routes/vocabRoutes');
 mongoose.Promise = global.Promise;
 mongoose.set('useFindAndModify', false);
 mongoose.connect(
-  // coming soon
+  `mongodb+srv://theBlade:${ process.env.MONGOPW }@cluster0-i0cbj.mongodb.net/test?retryWrites=true&w=majority`,
+  { useNewUrlParser: true }
 );
 
 const port = process.env.PORT || 3000;
 const app = express();
 
 app(cors());
-app.use(bodyParser.urlencode({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 routes(app);
