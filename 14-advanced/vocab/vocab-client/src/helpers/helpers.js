@@ -1,11 +1,22 @@
 import axios from 'axios';
+import Vue from 'vue';
+import VueFlashMessage from 'vue-flash-message';
+import 'vue-flash-message/dist/vue-flash-message.min.css';
+
+Vue.use(VueFlashMessage, {
+  messageOptions: {
+    timeout: 3000,
+    pauseOnInteract: true
+  }
+});
 
 const baseURL = 'http://localhost:3000/words/';
+const v = new Vue();
 
 // You don't really need to understand this (yet)
 const handleError = fn => (...params) =>
   fn(...params).catch(error => {
-    console.error(error);
+    v.flash(`${error.response.status}: ${error.response.statusText}`, 'error');
   });
 
 export const api = {
