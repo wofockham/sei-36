@@ -6,7 +6,6 @@ const bodyParser = require('body-parser');
 global.Vocab = require('./api/models/vocabModel');
 const routes = require('./api/routes/vocabRoutes');
 
-// Details:
 mongoose.Promise = global.Promise;
 mongoose.set('useFindAndModify', false);
 mongoose.connect(
