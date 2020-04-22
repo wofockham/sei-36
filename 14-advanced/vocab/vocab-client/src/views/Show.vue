@@ -41,7 +41,7 @@ export default {
 </script>
 
 <style scoped>
-.actions a {
+a {
   display: block;
   text-decoration: underline;
   margin: 20px 10px;
